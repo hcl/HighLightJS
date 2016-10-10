@@ -20,6 +20,8 @@ function hljs_settings_init(){
     );
 }
 
+
+
 function hljs_settings_style_section_text() {
     echo '<p>Change the looking of the code highlight.</p>';
 }

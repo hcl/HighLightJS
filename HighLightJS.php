@@ -22,6 +22,9 @@ require_once('HighLightJS-settings.php');
 
 function hljs_init(){
     $style_name=get_option('hljs-settings')['hljs-settings-style-choose'];
+    if ($style_name=='') {
+        $style_name='default';
+    }
     wp_enqueue_style('hljs_css', plugins_url('/styles/'.$style_name.'.css',__FILE__));
     wp_enqueue_script('hljs_script', plugins_url('/js/highlight.pack.js',__FILE__));
 }
@@ -35,6 +38,16 @@ function hljs_register_admin_menu(){
     //add_submenu_page('options-general.php','HighLightJS Settings','HighLightJS','manage_options','hljs','hljs_option_page');
     add_options_page('HighLightJS Settings','HighLightJS','manage_options','hljs-settings','hljs_settings_page');
 }
+
+function hljs_activate(){
+    register_uninstall_hook(__FILE__,'hljs_uninstall');
+}
+
+function hljs_uninstall(){
+    unregister_setting('hljs-settings', 'hljs-settings');
+}
+
+register_activation_hook(__FILE__,'hljs_activate');
 
 add_action('wp_head','hljs_init');
 add_action('wp_head','hljs_load');
