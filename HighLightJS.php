@@ -45,6 +45,9 @@ function hljs_activate(){
 
 function hljs_uninstall(){
     unregister_setting('hljs-settings', 'hljs-settings');
+    $option_name = 'hljs-settings';
+    delete_option($option_name);
+    delete_site_option($option_name);
 }
 
 register_activation_hook(__FILE__,'hljs_activate');
